@@ -55,6 +55,21 @@ namespace Unity.MaterialSwitch
             return true;
         }
 
+        public bool DisableOverrideProperty<T>(Material mat, string propertyName) 
+        {
+            MaterialProperties  mp = FindMaterialProperties(mat);
+            if (null == mp)
+                return false;
+
+            MaterialProperty<T> p = null;
+            p = mp?.FindColorProperty(propertyName) as MaterialProperty<T>;
+            if (null==p)
+                return false;
+
+            p.overrideBaseValue = false;
+            return true;
+        }
+
         void OnValidate()
         {
             foreach (var ppm in materialPropertiesList)
